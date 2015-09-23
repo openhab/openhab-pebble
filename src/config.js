@@ -17,7 +17,7 @@
 var Settings = require('settings');
 var Util = require('util');
 var Base64 = require('base64');
-var configURL = 'http://llamahunter.github.io/openhab.pebble/';
+var configURL = 'http://openhab.github.io/openhab.pebble/';
 
 var exports = module.exports = {};
 
