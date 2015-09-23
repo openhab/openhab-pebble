@@ -162,7 +162,7 @@ One way to automate this, is customise your get ``commit.template`` by adding
 a ``prepare-commit-msg`` hook to your openHAB for Pebble checkout:
 
 ```
-curl -L -o .git/hooks/prepare-commit-msg https://raw.github.com/openhab/openhab.pebble/master/contrib/prepare-commit-msg.hook && chmod +x .git/hooks/prepare-commit-msg
+curl -L -o .git/hooks/prepare-commit-msg https://raw.github.com/openhab/openhab2/master/contrib/prepare-commit-msg.hook && chmod +x .git/hooks/prepare-commit-msg
 ```
 
 * Note: the above script expects to find your GitHub user name in ``git config --get github.user``
