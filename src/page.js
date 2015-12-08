@@ -22,6 +22,7 @@ var Setpoint = require('setpoint');
 var Mapping = require('mapping');
 var Item = require('item');
 var ajax = require('ajax');
+var Voice = require('ui/voice');
 var exports = module.exports = {};
 var labelRE = new RegExp('(.*?) \\[(.*?)\\]');
 
@@ -65,7 +66,7 @@ function createItem(widget) {
         if ('mapping' in widget) {
           // if there's a mapping, look up the item value label in it
           var mappings = Util.arrayize(widget.mapping);
-          for (mapping of mappings) {
+          for (var mapping of mappings) {
             if (mapping.command == state) {
               item.subtitle = mapping.label;
               break;
@@ -118,13 +119,13 @@ function toggleSwitch(item, success) {
 function createPageMenu(data, resetSitemap) {
   var sections = [];
   var widgets = Util.arrayize(data.widget); 
-  for (widget of widgets) {
+  for (var widget of widgets) {
     switch (widget.type) {
       case 'Frame':
         var items = [];
         var subwidgets = Util.arrayize(widget.widget);
         // add all the subwidgets of the frame to an item list
-        for (subwidget of subwidgets) {
+        for (var subwidget of subwidgets) {
           items.push(createItem(subwidget));
         }
         // push the frame section
@@ -188,9 +189,9 @@ function createPageMenu(data, resetSitemap) {
           break;
         case 'Slider':
         case 'Setpoint':
-          if (widget.item.type == 'DimmerItem' || ( widget.item.type == 'GroupItem' && !IsNumeric(widget.item.state) )) {
+          if (widget.item.type == 'DimmerItem' || ( widget.item.type == 'GroupItem' && !isNumeric(widget.item.state) )) {
             Setpoint.dimmer(e.item.title, widget.item, regenerateItem);
-          } else if (widget.item.type == 'NumberItem' || ( widget.item.type == 'GroupItem' && IsNumeric(widget.item.state) )) {
+          } else if (widget.item.type == 'NumberItem' || ( widget.item.type == 'GroupItem' && isNumeric(widget.item.state) )) {
             Setpoint.number(e.item.title, widget.item, widget.min, widget.max, widget.step, regenerateItem);
           } else {
             Util.log('Unsupported setpoint/slider type: ' + widget.item.type);
@@ -201,11 +202,52 @@ function createPageMenu(data, resetSitemap) {
       }
     }
   });
+  //menu.on('longSelect', function (e) {
+  //  Util.log('Reset sitemap');
+  //  resetSitemap();
+  //});
   menu.on('longSelect', function (e) {
-    Util.log('Reset sitemap');
-    resetSitemap();
+    Util.log('longSelect');
+    startDictate();
   });
   return menu;
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function startDictate() {
+  Voice.dictate('start', function(e) {
+    if (e.err) {
+      Util.log('Error: ' + e.err);
+      return;
+    }
+
+    Util.log('transcription: ' + e.transcription);
+      
+    ajax(
+      {
+        url: 'http://172.17.2.21:8080/rest/items/VoiceCommand',
+        method: 'post',
+        type: 'text',
+        data: e.transcription,
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: Config.auth
+        }
+      },
+        
+      function (data) {
+        Util.log('Successfully sent command: ' + data);
+      },
+        
+      function (error) {
+        Util.log('Failed to send command: ' + error);
+        Util.error('Comm Error', "Can't set state");
+      }
+    );
+  });
 }
 
 exports.load = function (url, resetSitemap) {

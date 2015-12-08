@@ -22,7 +22,7 @@ var exports = module.exports = {};
 
 function createMappingMenu(itemName, item, mappings, success) {
   var items = [];
-  for (mapping of mappings) {
+  for (var mapping of mappings) {
     items.push({
       title: mapping.label
     });
