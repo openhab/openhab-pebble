@@ -14,10 +14,12 @@
 
 // A library to display a mapping menu
 
+/* jshint esversion: 6 */
 var UI = require('ui');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+/* global module */
 var exports = module.exports = {};
 
 function createMappingMenu(itemName, item, mappings, success) {

@@ -1,7 +1,7 @@
 // Copyright unknown
 
 // A Base64 encoding library
-
+/* global module */
 var exports = module.exports = {};
 
 var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

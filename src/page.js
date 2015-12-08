@@ -14,6 +14,7 @@
 
 // A library to display an OpenHAB sitemap page
 
+/* jshint esversion: 6 */
 var UI = require('ui');
 var Util = require('util');
 var Config = require('config');
@@ -23,6 +24,7 @@ var Mapping = require('mapping');
 var Item = require('item');
 var ajax = require('ajax');
 var Voice = require('ui/voice');
+/* global module */
 var exports = module.exports = {};
 var labelRE = new RegExp('(.*?) \\[(.*?)\\]');
 
