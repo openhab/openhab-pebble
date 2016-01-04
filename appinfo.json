@@ -29,16 +29,6 @@
                 "type": "font"
             },
             {
-                "file": "images/action_icon_down.png",
-                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
-                "type": "png"
-            },
-            {
-                "file": "images/action_icon_up.png",
-                "name": "IMAGES_ACTION_ICON_UP_PNG",
-                "type": "png"
-            },
-            {
                 "file": "images/openhab-splash.png",
                 "name": "IMAGES_OPENHAB_SPLASH_PNG",
                 "type": "png"
@@ -50,17 +40,33 @@
                 "type": "png"
             },
             {
+                "file": "images/action_icon_up.png",
+                "name": "IMAGES_ACTION_ICON_UP_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_down.png",
+                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/action-icon-onoff.png",
                 "name": "IMAGES_ACTION_ICON_ONOFF_PNG",
                 "type": "png"
             }
         ]
     },
+    "sdkVersion": "3",
     "shortName": "OpenHAB",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "73ad05b2-2f62-4f57-934a-0f820530f401",
     "versionCode": 1,
     "versionLabel": "1.0",
     "watchapp": {
+        "hiddenApp": false,
         "watchface": false
     }
 }

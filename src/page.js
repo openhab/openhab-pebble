@@ -14,6 +14,7 @@
 
 // A library to display an OpenHAB sitemap page
 
+/* jshint esversion: 6 */
 var UI = require('ui');
 var Util = require('util');
 var Config = require('config');
@@ -22,6 +23,9 @@ var Setpoint = require('setpoint');
 var Mapping = require('mapping');
 var Item = require('item');
 var ajax = require('ajax');
+var Voice = require('ui/voice');
+var Base64 = require('base64');
+/* global module */
 var exports = module.exports = {};
 var labelRE = new RegExp('(.*?) \\[(.*?)\\]');
 
@@ -65,7 +69,7 @@ function createItem(widget) {
         if ('mapping' in widget) {
           // if there's a mapping, look up the item value label in it
           var mappings = Util.arrayize(widget.mapping);
-          for (mapping of mappings) {
+          for (var mapping of mappings) {
             if (mapping.command == state) {
               item.subtitle = mapping.label;
               break;
@@ -105,7 +109,7 @@ function createItem(widget) {
 
 function toggleSwitch(item, success) {
   var command;
-  if (item.state == 'OFF') {
+  if (item.state == 'OFF' || item.state == 'Uninitialized') {
     command = 'ON';
   } else if (item.state == 'ON') {
     command = 'OFF';
@@ -118,13 +122,13 @@ function toggleSwitch(item, success) {
 function createPageMenu(data, resetSitemap) {
   var sections = [];
   var widgets = Util.arrayize(data.widget); 
-  for (widget of widgets) {
+  for (var widget of widgets) {
     switch (widget.type) {
       case 'Frame':
         var items = [];
         var subwidgets = Util.arrayize(widget.widget);
         // add all the subwidgets of the frame to an item list
-        for (subwidget of subwidgets) {
+        for (var subwidget of subwidgets) {
           items.push(createItem(subwidget));
         }
         // push the frame section
@@ -168,7 +172,7 @@ function createPageMenu(data, resetSitemap) {
       };
       switch (widget.type) {
         case 'Switch':
-          if (widget.item.type == 'SwitchItem') {
+          if (widget.item.type == 'SwitchItem' || widget.item.type == 'GroupItem') {
             toggleSwitch(widget.item, regenerateItem);
           } else if ('mapping' in widget) {
             var mappings = Util.arrayize(widget.mapping);
@@ -188,9 +192,9 @@ function createPageMenu(data, resetSitemap) {
           break;
         case 'Slider':
         case 'Setpoint':
-          if (widget.item.type == 'DimmerItem') {
+          if (widget.item.type == 'DimmerItem' || ( widget.item.type == 'GroupItem' && !isNumeric(widget.item.state) )) {
             Setpoint.dimmer(e.item.title, widget.item, regenerateItem);
-          } else if (widget.item.type == 'NumberItem') {
+          } else if (widget.item.type == 'NumberItem' || ( widget.item.type == 'GroupItem' && isNumeric(widget.item.state) )) {
             Setpoint.number(e.item.title, widget.item, widget.min, widget.max, widget.step, regenerateItem);
           } else {
             Util.log('Unsupported setpoint/slider type: ' + widget.item.type);
@@ -202,10 +206,78 @@ function createPageMenu(data, resetSitemap) {
     }
   });
   menu.on('longSelect', function (e) {
-    Util.log('Reset sitemap');
-    resetSitemap();
+    Util.log('Show action menu');
+    showActionMenu(resetSitemap);
   });
   return menu;
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function showActionMenu(resetSitemap) {
+  var actions = [
+    {
+      title: 'Voice command',
+      subtitle: 'Send voice command'
+    },
+    {
+      title: 'Reset sitemap',
+      subtitle: 'Reloads sitemap'
+    },
+  ];
+  
+  var actionMenu = new UI.Menu({
+    sections: [{
+      title: 'Action List',
+      items: actions
+    }]
+  });
+  
+  actionMenu.on('select', function (e) {
+    if (e.item.title == 'Voice command') {
+      startDictate();
+    } else if (e.item.title == 'Reset sitemap') {
+      resetSitemap();
+    }
+  });
+
+  actionMenu.show();
+}
+
+function startDictate() {
+  Voice.dictate('start', function(e) {
+    if (e.err) {
+      Util.log('Dictate error: ' + e.err);
+      return;
+    }
+    
+    var decodedTranscription = Base64.decode(e.transcription);
+    Util.log('Dictate transcription: ' + decodedTranscription);
+
+    ajax(
+      {
+        url: Config.server + '/rest/items/VoiceCommand',
+        method: 'post',
+        type: 'text',
+        data: decodedTranscription,
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: Config.auth
+        }
+      },
+
+      function (data) {
+        Util.log('Successfully sent voice command: ' + data);
+      },
+
+      function (error) {
+        Util.log('Failed to send voice command: ' + error);
+        Util.error('Comm Error', "Can't set state");
+      }
+    );
+  });
 }
 
 exports.load = function (url, resetSitemap) {

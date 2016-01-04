@@ -17,6 +17,7 @@
 var Util = require('util');
 var Config = require('config');
 var ajax = require('ajax');
+/* global module */
 var exports = module.exports = {};
 
 exports.sendCommand = function (item, command, success) {
