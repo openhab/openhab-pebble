@@ -3,8 +3,8 @@
     "capabilities": [
         "configurable"
     ],
-    "companyName": "richard@lee.name",
-    "longName": "OpenHAB for Pebble",
+    "companyName": "pebble@openhab.org",
+    "longName": "openHAB for Pebble",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -56,10 +56,15 @@
             }
         ]
     },
-    "shortName": "OpenHAB",
+    "sdkVersion": "3",
+    "shortName": "openHAB",
+    "targetPlatforms": [
+        "aplite",
+	"basalt"
+    ],
     "uuid": "73ad05b2-2f62-4f57-934a-0f820530f401",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": false
     }
