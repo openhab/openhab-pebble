@@ -107,7 +107,7 @@ function createItem(widget) {
 
 function toggleSwitch(item, success) {
   var command;
-  if (item.state == 'OFF') {
+  if (item.state == 'OFF' || item.state == 'Uninitialized') {
     command = 'ON';
   } else if (item.state == 'ON') {
     command = 'OFF';
@@ -170,7 +170,7 @@ function createPageMenu(data, resetSitemap) {
       };
       switch (widget.type) {
         case 'Switch':
-          if (widget.item.type == 'SwitchItem') {
+          if (widget.item.type == 'SwitchItem' || widget.item.type == 'GroupItem') {
             toggleSwitch(widget.item, regenerateItem);
           } else if ('mapping' in widget) {
             var mappings = Util.arrayize(widget.mapping);
@@ -190,9 +190,9 @@ function createPageMenu(data, resetSitemap) {
           break;
         case 'Slider':
         case 'Setpoint':
-          if (widget.item.type == 'DimmerItem') {
+          if (widget.item.type == 'DimmerItem' || (widget.item.type == 'GroupItem' && !isNumeric(widget.item.state))) {
             Setpoint.dimmer(e.item.title, widget.item, regenerateItem);
-          } else if (widget.item.type == 'NumberItem') {
+          } else if (widget.item.type == 'NumberItem' || (widget.item.type == 'GroupItem' && isNumeric(widget.item.state))) {
             Setpoint.number(e.item.title, widget.item, widget.min, widget.max, widget.step, regenerateItem);
           } else {
             Util.log('Unsupported setpoint/slider type: ' + widget.item.type);
@@ -208,6 +208,10 @@ function createPageMenu(data, resetSitemap) {
     resetSitemap();
   });
   return menu;
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 exports.load = function (url, resetSitemap) {
