@@ -14,7 +14,6 @@
 
 // A library to display a mapping menu
 
-/* jshint esversion: 6 */
 var UI = require('ui');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
@@ -24,7 +23,8 @@ var exports = module.exports = {};
 
 function createMappingMenu(itemName, item, mappings, success) {
   var items = [];
-  for (var mapping of mappings) {
+  for (var idx in mappings) {
+    var mapping = mappings[idx];
     items.push({
       title: mapping.label
     });

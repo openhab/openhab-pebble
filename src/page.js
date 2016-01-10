@@ -14,7 +14,6 @@
 
 // A library to display an OpenHAB sitemap page
 
-/* jshint esversion: 6 */
 var UI = require('ui');
 var Util = require('util');
 var Config = require('config');
@@ -67,7 +66,8 @@ function createItem(widget) {
         if ('mapping' in widget) {
           // if there's a mapping, look up the item value label in it
           var mappings = Util.arrayize(widget.mapping);
-          for (var mapping of mappings) {
+          for (var idx in mappings) {
+            var mapping = mappings[idx];
             if (mapping.command == state) {
               item.subtitle = mapping.label;
               break;
@@ -120,13 +120,15 @@ function toggleSwitch(item, success) {
 function createPageMenu(data, resetSitemap) {
   var sections = [];
   var widgets = Util.arrayize(data.widget); 
-  for (var widget of widgets) {
+  for (var idx in widgets) {
+    var widget = widgets[idx];
     switch (widget.type) {
       case 'Frame':
         var items = [];
         var subwidgets = Util.arrayize(widget.widget);
         // add all the subwidgets of the frame to an item list
-        for (var subwidget of subwidgets) {
+        for (var idx2 in subwidgets) {
+          var subwidget = subwidgets[idx2];
           items.push(createItem(subwidget));
         }
         // push the frame section
