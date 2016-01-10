@@ -11,32 +11,22 @@
             {
                 "file": "images/menu_icon.png",
                 "name": "IMAGE_MENU_ICON",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_splash.png",
                 "name": "IMAGE_LOGO_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/tile_splash.png",
                 "name": "IMAGE_TILE_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "fonts/UbuntuMono-Regular.ttf",
                 "name": "MONO_FONT_14",
                 "type": "font"
-            },
-            {
-                "file": "images/action_icon_down.png",
-                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
-                "type": "png"
-            },
-            {
-                "file": "images/action_icon_up.png",
-                "name": "IMAGES_ACTION_ICON_UP_PNG",
-                "type": "png"
             },
             {
                 "file": "images/openhab-splash.png",
@@ -50,6 +40,16 @@
                 "type": "png"
             },
             {
+                "file": "images/action_icon_up.png",
+                "name": "IMAGES_ACTION_ICON_UP_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_down.png",
+                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/action-icon-onoff.png",
                 "name": "IMAGES_ACTION_ICON_ONOFF_PNG",
                 "type": "png"
@@ -60,12 +60,13 @@
     "shortName": "openHAB",
     "targetPlatforms": [
         "aplite",
-	"basalt"
+        "basalt"
     ],
     "uuid": "73ad05b2-2f62-4f57-934a-0f820530f401",
     "versionCode": 1,
     "versionLabel": "1.1",
     "watchapp": {
+        "hiddenApp": false,
         "watchface": false
     }
 }
