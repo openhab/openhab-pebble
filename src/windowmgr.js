@@ -14,7 +14,9 @@
 
 // A library to track the active windows in the app
 
+/* jshint esversion: 6 */
 var SplashWindow = require('splashwindow');
+/* global module */
 var exports = module.exports = {};
 var windows = [];
 
@@ -38,7 +40,7 @@ exports.pop = function() {
 exports.popAll = function () {
   // show the splash window if popping all other windows
   SplashWindow.show();
-  for (window of windows) {
+  for (var window of windows) {
     window.hide();
   }
   windows = [];

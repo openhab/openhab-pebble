@@ -14,23 +14,25 @@
 
 // A library to query the available sitemaps and display them in a menu
 
+/* jshint esversion: 6 */
 var UI = require('ui');
 var Util = require('util');
 var ajax = require('ajax');
 var Config = require('config');
 var Page = require('page');
 var WindowMgr = require('windowmgr');
+/* global module */
 var exports = module.exports = {};
 
 function resetSitemap() {
   Config.sitemap = '-no-such-sitemap-';
   WindowMgr.popAll();
-  exports.load()
+  exports.load();
 }
 
 function createSitemapMenu(sitemaps) {
   var items = [];
-  for (sitemap of sitemaps) {
+  for (var sitemap of sitemaps) {
     items.push({
       title: sitemap.label
     });
@@ -66,7 +68,7 @@ exports.load = function () {
       var autoSelectedSitemap;
       if (Config.sitemap) {
         // user configured a particular sitemap
-        for (sitemap of sitemaps) {
+        for (var sitemap of sitemaps) {
           if (sitemap.name == Config.sitemap) {
             autoSelectedSitemap = sitemap;
           }

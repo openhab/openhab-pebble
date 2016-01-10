@@ -19,6 +19,7 @@ var Vector2 = require('vector2');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+/* global module */
 var exports = module.exports = {};
 
 function createWindow(itemName, item, min, max, step, isDimmer, success) {

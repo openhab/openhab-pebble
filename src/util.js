@@ -16,6 +16,7 @@
 
 var UI = require('ui');
 var WindowMgr = require('windowmgr');
+/* global module */
 var exports = module.exports = {};
 
 exports.now = function () {

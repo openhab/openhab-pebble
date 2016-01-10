@@ -16,7 +16,9 @@
 
 var UI = require('ui');
 var Vector2 = require('vector2');
-var splashWindow = exports = module.exports = new UI.Window();
+/* global module */
+var exports = module.exports = new UI.Window();
+var splashWindow = exports;
 
 var splash_icon = new UI.Image({
   image: 'IMAGES_OPENHAB_SPLASH_PNG',
