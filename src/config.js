@@ -27,6 +27,16 @@ exports.onConfigChanged = function() {
   Util.error('Internal Error', 'Config.onConfigChanged not set!');
 };
 
+// Fetch Timeline token for display on configuration page
+Pebble.getTimelineToken(
+  function (token) {
+    Settings.option('token', token);
+  },
+  function (error) {
+    console.log('Error getting timeline token: ' + error);
+  }
+);
+
 // populate exports and initialize Settings
 function getConfig() {
   var localUrl = 'http://demo.openhab.org:8080';
