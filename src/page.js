@@ -249,7 +249,7 @@ function showActionMenu(resetSitemap) {
 }
 
 function startDictate() {
-  Voice.dictate('start', function(e) {
+  Voice.dictate('start', Config.confirmVoice, function(e) {
     if (e.err) {
       Util.log('Dictate error: ' + e.err);
       return;

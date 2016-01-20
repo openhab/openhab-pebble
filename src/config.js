@@ -79,6 +79,13 @@ function getConfig() {
   } else {
     Settings.option('sitemap', exports.sitemap);
   }
+  
+  exports.confirmVoice = true;
+  if (Settings.option('confirmVoice') == 'off') {
+    exports.confirmVoice = false;
+  } else {
+    Settings.option('confirmVoice', 'on');
+  }
 }
 
 // initialize things from local storage, if it exists
