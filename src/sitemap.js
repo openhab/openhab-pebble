@@ -64,7 +64,7 @@ exports.load = function () {
     
     function (data) {
       Util.log('Successfully fetched sitemaps: ' + JSON.stringify(data));
-      var sitemaps = Util.arrayize(data.sitemap);
+      var sitemaps = Util.arrayize(data.sitemap ? data.sitemap : data);
       var autoSelectedSitemap;
       if (Config.sitemap) {
         // user configured a particular sitemap
