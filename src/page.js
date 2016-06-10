@@ -121,13 +121,13 @@ function toggleSwitch(item, success) {
 
 function createPageMenu(data, resetSitemap) {
   var sections = [];
-  var widgets = Util.arrayize(data.widget); 
+  var widgets = Util.arrayize(data.widget ? data.widget : data.widgets); 
   for (var idx in widgets) {
     var widget = widgets[idx];
     switch (widget.type) {
       case 'Frame':
         var items = [];
-        var subwidgets = Util.arrayize(widget.widget);
+        var subwidgets = Util.arrayize(widget.widget ? widget.widget : widget.widgets);
         // add all the subwidgets of the frame to an item list
         for (var idx2 in subwidgets) {
           var subwidget = subwidgets[idx2];
@@ -157,7 +157,7 @@ function createPageMenu(data, resetSitemap) {
     var widget = widgets[e.sectionIndex];
     Util.log('widget: ' + JSON.stringify(widget));
     if (widget.type == 'Frame') {
-      var subwidgets = Util.arrayize(widget.widget);
+      var subwidgets = Util.arrayize(widget.widget ? widget.widget : widget.widgets);
       widget = subwidgets[e.itemIndex];
       Util.log('subwidget: ' + JSON.stringify(widget));
     }
@@ -176,16 +176,16 @@ function createPageMenu(data, resetSitemap) {
         case 'Switch':
           if (widget.item.type == 'SwitchItem' || widget.item.type == 'GroupItem') {
             toggleSwitch(widget.item, regenerateItem);
-          } else if ('mapping' in widget) {
-            var mappings = Util.arrayize(widget.mapping);
+          } else if ('mapping' in widget || 'mappings' in widget) {
+            var mappings = Util.arrayize(widget.mapping ? widget.mapping : widget.mappings );
             Mapping.change(e.item.title, widget.item, mappings, regenerateItem);
           } else {
             Util.log('Unsupported switch type: ' + widget.item.type);
           }
           break;
         case 'Selection':
-          if ('mapping' in widget) {
-            var mappings2 = Util.arrayize(widget.mapping);
+          if ('mapping' in widget || 'mappings' in widget) {
+            var mappings2 = Util.arrayize(widget.mapping ? widget.mapping : widget.mappings);
             Mapping.change(e.item.title, widget.item, mappings2, regenerateItem);
           } else {
             // unclear how to support selection without a mapping
