@@ -4,8 +4,7 @@
         "configurable"
     ],
     "companyName": "pebble@openhab.org",
-    "longName": "openHAB for Pebble",
-    "projectType": "pebblejs",
+    "longName": "openHAB",
     "resources": {
         "media": [
             {
@@ -29,30 +28,30 @@
                 "type": "font"
             },
             {
-                "file": "images/openhab-splash.png",
-                "name": "IMAGES_OPENHAB_SPLASH_PNG",
-                "type": "png"
-            },
-            {
                 "file": "images/openhab-menu-icon.png",
                 "menuIcon": true,
                 "name": "IMAGES_OPENHAB_MENU_ICON_PNG",
-                "type": "png"
-            },
-            {
-                "file": "images/action_icon_up.png",
-                "name": "IMAGES_ACTION_ICON_UP_PNG",
-                "type": "png"
-            },
-            {
-                "file": "images/action_icon_down.png",
-                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/action-icon-onoff.png",
                 "name": "IMAGES_ACTION_ICON_ONOFF_PNG",
-                "type": "png"
+                "type": "bitmap"
+            },
+            {
+                "file": "images/action_icon_up.png",
+                "name": "IMAGES_ACTION_ICON_UP_PNG",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/action_icon_down.png",
+                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
+                "type": "bitmap"
+            },
+            {
+                "file": "images/openhab-splash.png",
+                "name": "IMAGES_OPENHAB_SPLASH_PNG",
+                "type": "bitmap"
             }
         ]
     },
@@ -60,7 +59,8 @@
     "shortName": "openHAB",
     "targetPlatforms": [
         "aplite",
-        "basalt"
+        "basalt",
+        "chalk"
     ],
     "uuid": "73ad05b2-2f62-4f57-934a-0f820530f401",
     "versionCode": 1,

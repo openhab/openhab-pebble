@@ -40,7 +40,8 @@ function createSitemapMenu(sitemaps) {
   var menu = new UI.Menu({
     sections: [{
       title: 'Sitemaps',
-      items: items
+      items: items,
+      highlightBackgroundColor: Util.menuColor()
     }]
   });
   menu.on('select', function(e) {
