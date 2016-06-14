@@ -21,9 +21,7 @@ var exports = module.exports = new UI.Window();
 var splashWindow = exports;
 
 var splash_icon = new UI.Image({
-  image: 'IMAGES_OPENHAB_SPLASH_PNG',
-  position: new Vector2(0, 0),
-  size: new Vector2(144, 144)
+  image: 'IMAGES_OPENHAB_SPLASH_PNG'
 });
 
 splashWindow.add(splash_icon);

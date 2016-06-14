@@ -16,6 +16,8 @@
 
 var UI = require('ui');
 var WindowMgr = require('windowmgr');
+var Feature = require('platform/feature');
+
 /* global module */
 var exports = module.exports = {};
 
@@ -44,3 +46,7 @@ exports.error = function (title, subtitle) {
   WindowMgr.popAll();
   WindowMgr.push(card);
 };
+
+exports.menuColor = function(){
+  return Feature.color('cobalt-blue', 'black');
+}

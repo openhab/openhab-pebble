@@ -19,6 +19,8 @@ var Vector2 = require('vector2');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+var Feature = require('platform/feature');
+
 /* global module */
 var exports = module.exports = {};
 
@@ -28,28 +30,37 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
 			up: 'images/action_icon_up.png',
 			down: 'images/action_icon_down.png',
 			backgroundColor: 'white'
-	  }
+	  },
+    backgroundColor: Feature.color('cobalt-blue','white')
   });
-  
+
   if (isDimmer) {
     setpointWindow.action('select', 'images/action-icon-onoff.png');
   }
-  
+
+  //Square vs Round watches
+  var x = Feature.rectangle(0, 15);
+  var yOffset = Feature.rectangle(0, 5);
+  var width = Feature.rectangle(114, 120);
+  var textAlign = Feature.rectangle('left', 'center');
+
   var titleText = new UI.Text({
-    position: new Vector2(0, 15),
-    size: new Vector2(114, 84),
+    position: new Vector2(x, 15 + yOffset),
+    size: new Vector2(width, 84),
     font: 'gothic-28-bold',
 		textOverflow: 'wrap',
     text: itemName,
+    textAlign: textAlign
   });
-  
+
 	var stateText = new UI.Text({
-    position: new Vector2(0, 105),
-    size: new Vector2(114, 84),
+    position: new Vector2(x, 105 - yOffset),
+    size: new Vector2(width, 84),
     font: 'bitham-42-medium-numbers',
-    text: item.state
+    text: item.state,
+    textAlign: textAlign
   });
-  
+
   setpointWindow.add(titleText);
   setpointWindow.add(stateText);
 
@@ -64,13 +75,13 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
     }
     Item.sendCommand(item, newState.toString(), function () {
       stateText.text(item.state);
-    });    
+    });
   };
-  
+
   setpointWindow.on('click', 'up', function (event) {
     deltaSetpoint(step);
   });
-  
+
   setpointWindow.on('longClick', 'up', function (event) {
     deltaSetpoint(step * 10);
   });
@@ -82,7 +93,7 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
   setpointWindow.on('longClick', 'down', function (event) {
     deltaSetpoint(-step * 10);
   });
-  
+
   if (isDimmer) {
     setpointWindow.on('click', 'select', function (event) {
       var newState = (~~item.state == min) ? max : min;
@@ -92,12 +103,12 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
       });
     });
   }
-  
+
 	setpointWindow.on('click', 'back', function (event) {
     WindowMgr.pop();
     success();
   });
-  
+
   return setpointWindow;
 }
 

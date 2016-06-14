@@ -57,10 +57,11 @@ function createItem(widget) {
         // fall back on the item state
         item.subtitle = widget.item.state;
       }
-      break;      
+      break;
     case 'Switch':
     case 'Selection':
       // if they provided a split label, use it.  Otherwise...
+      item.icon = 'IMAGES_ACTION_ICON_ONOFF_PNG';
       if ( !('subtitle' in item)) {
         var state = widget.item.state;
         // fall back on the item state, but...
@@ -88,7 +89,7 @@ function createItem(widget) {
     case 'Frame':
       // Weird... shouldn't this be a linked page?  not supported.
       item = undefined;
-      break; 
+      break;
     case 'List':
       // not sure what this one does
       item = undefined;
@@ -109,7 +110,7 @@ function createItem(widget) {
 
 function toggleSwitch(item, success) {
   var command;
-  if (item.state == 'OFF' || item.state == 'Uninitialized') {
+  if (!item.state || item.state == 'OFF' || item.state == 'Uninitialized' || item.state == 'Undefined') {
     command = 'ON';
   } else if (item.state == 'ON') {
     command = 'OFF';
@@ -121,7 +122,7 @@ function toggleSwitch(item, success) {
 
 function createPageMenu(data, resetSitemap) {
   var sections = [];
-  var widgets = Util.arrayize(data.widget ? data.widget : data.widgets); 
+  var widgets = Util.arrayize(data.widget ? data.widget : data.widgets);
   for (var idx in widgets) {
     var widget = widgets[idx];
     switch (widget.type) {
@@ -150,7 +151,8 @@ function createPageMenu(data, resetSitemap) {
     }
   }
   var menu = new UI.Menu({
-    sections: sections
+    sections: sections,
+    highlightBackgroundColor: Util.menuColor()
   });
   menu.on('select', function(e) {
     Util.log('item selected: ' + e.item.title + ', section: ' + e.sectionIndex + ', index: ' + e.itemIndex);
@@ -170,7 +172,7 @@ function createPageMenu(data, resetSitemap) {
         var newItem = createItem(widget);
         if (newItem) {
           menu.item(e.sectionIndex, e.itemIndex, newItem);
-        }        
+        }
       };
       switch (widget.type) {
         case 'Switch':
@@ -229,14 +231,14 @@ function showActionMenu(resetSitemap) {
       subtitle: 'Reloads sitemap'
     },
   ];
-  
+
   var actionMenu = new UI.Menu({
     sections: [{
       title: 'Action List',
       items: actions
     }]
   });
-  
+
   actionMenu.on('select', function (e) {
     if (e.item.title == 'Voice command') {
       startDictate();
@@ -254,7 +256,7 @@ function startDictate() {
       Util.log('Dictate error: ' + e.err);
       return;
     }
-    
+
     var decodedTranscription = Base64.decode(e.transcription);
     Util.log('Dictate transcription: ' + decodedTranscription);
 
@@ -293,13 +295,13 @@ exports.load = function (url, resetSitemap) {
         Authorization: Config.auth
       }
     },
-    
+
     function (data) {
       Util.log('Successfully fetched page: ' + JSON.stringify(data));
       var menu = createPageMenu(data, resetSitemap);
       WindowMgr.push(menu);
     },
-    
+
     function (error) {
       Util.log('Failed to fetch page: ' + error);
       Util.error('Comm Error', "Can't fetch page");
