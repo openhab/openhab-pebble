@@ -17,6 +17,7 @@
 var Settings = require('settings');
 var Util = require('util');
 var Base64 = require('base64');
+var Feature = require('platform/feature');
 var configURL = 'http://openhab.github.io/openhab.pebble/';
 /* global module */
 var exports = module.exports = {};
@@ -86,6 +87,20 @@ function getConfig() {
   } else {
     Settings.option('confirmVoice', 'on');
   }
+  
+  exports.statusTextColor = Feature.color('white', 'white');
+  exports.statusBackgroundColor = Feature.color('orange', 'black');
+  exports.actionBackgroundColor = Feature.color('veryLightBlue', 'black');
+  exports.menuSectionTextColor = Feature.color('white', 'black');
+  exports.menuSectionBackgroundColor = Feature.color('veryLightBlue', 'white'); 
+  exports.menuTextColor = Feature.color('black', 'black');
+  exports.menuBackgroundColor = Feature.color('white', 'white');
+  exports.menuHighlightTextColor = Feature.color('white', 'white');
+  exports.menuHighlightBackgroundColor = Feature.color('blue', 'black');
+  exports.errorTitleColor = Feature.color('white', 'black');
+  exports.errorBackgroundColor = Feature.color('red', 'white');
+  exports.windowTextColor = Feature.color('black', 'white');
+  exports.windowBackgroundColor = Feature.color('white', 'black');
 }
 
 // initialize things from local storage, if it exists

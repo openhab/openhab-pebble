@@ -19,16 +19,13 @@ var SplashWindow = require('splashwindow');
 var exports = module.exports = {};
 var windows = [];
 
-// initially display the splash window
-SplashWindow.show();
-
 exports.push = function(window) {
   windows.push(window);
   window.show();
   if (windows.length == 1) {
     // hide the splash window if we've pushed our first window
     SplashWindow.hide();
-  }
+   }
 };
 
 exports.pop = function() {
