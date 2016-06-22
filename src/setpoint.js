@@ -19,6 +19,8 @@ var Vector2 = require('vector2');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+var Platform = require('platform');
+
 /* global module */
 var exports = module.exports = {};
 
@@ -34,9 +36,12 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
   if (isDimmer) {
     setpointWindow.action('select', 'images/action-icon-onoff.png');
   }
+
+  var isChalk = (Platform.version() === 'chalk');
+
   
   var titleText = new UI.Text({
-    position: new Vector2(0, 15),
+    position: isChalk ? new Vector2(40, 15) : new Vector2(0, 15),
     size: new Vector2(114, 84),
     font: 'gothic-28-bold',
 		textOverflow: 'wrap',
@@ -44,7 +49,7 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
   });
   
 	var stateText = new UI.Text({
-    position: new Vector2(0, 105),
+    position: isChalk ? new Vector2(40, 105) : new Vector2(0, 105),
     size: new Vector2(114, 84),
     font: 'bitham-42-medium-numbers',
     text: item.state
