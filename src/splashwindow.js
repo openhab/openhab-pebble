@@ -15,15 +15,12 @@
 // A library to display a splash screen
 
 var UI = require('ui');
-var Vector2 = require('vector2');
 /* global module */
-var exports = module.exports = new UI.Window();
+var exports = module.exports = new UI.Window({fullscreen: true });
 var splashWindow = exports;
 
 var splash_icon = new UI.Image({
-  image: 'IMAGES_OPENHAB_SPLASH_PNG',
-  position: new Vector2(0, 0),
-  size: new Vector2(144, 144)
+  image: 'IMAGE_TILE_SPLASH'
 });
 
 splashWindow.add(splash_icon);

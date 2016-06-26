@@ -16,6 +16,7 @@
 
 var UI = require('ui');
 var WindowMgr = require('windowmgr');
+var Config = require('config');
 /* global module */
 var exports = module.exports = {};
 
@@ -37,7 +38,10 @@ exports.log = function (msg) {
 exports.error = function (title, subtitle) {
   var card = new UI.Card({
     title: title,
-    subtitle: subtitle
+    subtitle: subtitle,
+    titleColor: Config.errorTextColor,
+    subtitleColor: Config.errorTextColor,
+    backgroundColor: Config.errorBackgroundColor
   });
 
   // Display the Card

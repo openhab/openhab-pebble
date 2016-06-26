@@ -18,6 +18,7 @@ var UI = require('ui');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+var Config = require('config');
 /* global module */
 var exports = module.exports = {};
 
@@ -30,7 +31,17 @@ function createMappingMenu(itemName, item, mappings, success) {
     });
   }
   var menu = new UI.Menu({
+    status: {
+      color: Config.statusTextColor,
+      backgroundColor: Config.statusBackgroundColor
+    },
+    textColor: Config.menuTextColor,
+    backgroundColor: Config.menuBackgroundColor,
+    highlightTextColor: Config.menuHighlightTextColor,
+    highlightBackgroundColor: Config.menuHighlightBackgroundColor,
     sections: [{
+      textColor: Config.menuSectionTextColor,
+      backgroundColor: Config.menuSectionBackgroundColor,
       title: itemName,
       items: items
     }]

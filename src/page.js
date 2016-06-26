@@ -20,10 +20,9 @@ var Config = require('config');
 var WindowMgr = require('windowmgr');
 var Setpoint = require('setpoint');
 var Mapping = require('mapping');
+var Actions = require('actions');
 var Item = require('item');
 var ajax = require('ajax');
-var Voice = require('ui/voice');
-var Base64 = require('base64');
 /* global module */
 var exports = module.exports = {};
 var labelRE = new RegExp('(.*?) \\[(.*?)\\]');
@@ -135,6 +134,8 @@ function createPageMenu(data, resetSitemap) {
         }
         // push the frame section
         sections.push({
+          backgroundColor: Config.menuSectionBackgroundColor,
+		      textColor: Config.menuSectionTextColor,
           title: widget.label,
           items: items
         });
@@ -150,6 +151,14 @@ function createPageMenu(data, resetSitemap) {
     }
   }
   var menu = new UI.Menu({
+    status: {
+      color: Config.statusTextColor,
+      backgroundColor: Config.statusBackgroundColor
+    },
+    textColor: Config.menuTextColor,
+    backgroundColor: Config.menuBackgroundColor,
+    highlightTextColor: Config.menuHighlightTextColor,
+    highlightBackgroundColor: Config.menuHighlightBackgroundColor,
     sections: sections
   });
   menu.on('select', function(e) {
@@ -209,77 +218,13 @@ function createPageMenu(data, resetSitemap) {
   });
   menu.on('longSelect', function (e) {
     Util.log('Show action menu');
-    showActionMenu(resetSitemap);
+    Actions.load(resetSitemap);
   });
   return menu;
 }
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function showActionMenu(resetSitemap) {
-  var actions = [
-    {
-      title: 'Voice command',
-      subtitle: 'Send voice command'
-    },
-    {
-      title: 'Reset sitemap',
-      subtitle: 'Reloads sitemap'
-    },
-  ];
-  
-  var actionMenu = new UI.Menu({
-    sections: [{
-      title: 'Action List',
-      items: actions
-    }]
-  });
-  
-  actionMenu.on('select', function (e) {
-    if (e.item.title == 'Voice command') {
-      startDictate();
-    } else if (e.item.title == 'Reset sitemap') {
-      resetSitemap();
-    }
-  });
-
-  actionMenu.show();
-}
-
-function startDictate() {
-  Voice.dictate('start', Config.confirmVoice, function(e) {
-    if (e.err) {
-      Util.log('Dictate error: ' + e.err);
-      return;
-    }
-    
-    var decodedTranscription = Base64.decode(e.transcription);
-    Util.log('Dictate transcription: ' + decodedTranscription);
-
-    ajax(
-      {
-        url: Config.server + '/rest/items/VoiceCommand',
-        method: 'post',
-        type: 'text',
-        data: decodedTranscription,
-        headers: {
-          'Content-Type': 'text/plain',
-          Authorization: Config.auth
-        }
-      },
-
-      function (data) {
-        Util.log('Successfully sent voice command: ' + data);
-      },
-
-      function (error) {
-        Util.log('Failed to send voice command: ' + error);
-        Util.error('Comm Error', "Can't set state");
-      }
-    );
-  });
 }
 
 exports.load = function (url, resetSitemap) {

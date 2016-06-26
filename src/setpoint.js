@@ -19,16 +19,22 @@ var Vector2 = require('vector2');
 var WindowMgr = require('windowmgr');
 var Item = require('item');
 var Util = require('util');
+var Config = require('config');
 /* global module */
 var exports = module.exports = {};
 
 function createWindow(itemName, item, min, max, step, isDimmer, success) {
   var setpointWindow = new UI.Window({
+    status: {
+      color: Config.statusTextColor,
+      backgroundColor: Config.statusBackgroundColor
+    },
     action: {
 			up: 'images/action_icon_up.png',
 			down: 'images/action_icon_down.png',
-			backgroundColor: 'white'
-	  }
+			backgroundColor: Config.actionBackgroundColor
+	  },
+    backgroundColor: Config.windowBackgroundColor
   });
   
   if (isDimmer) {
@@ -41,13 +47,15 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
     font: 'gothic-28-bold',
 		textOverflow: 'wrap',
     text: itemName,
+    color: Config.windowTextColor
   });
   
 	var stateText = new UI.Text({
     position: new Vector2(0, 105),
     size: new Vector2(114, 84),
     font: 'bitham-42-medium-numbers',
-    text: item.state
+    text: item.state,
+    color: Config.windowTextColor
   });
   
   setpointWindow.add(titleText);
@@ -93,7 +101,7 @@ function createWindow(itemName, item, min, max, step, isDimmer, success) {
     });
   }
   
-	setpointWindow.on('click', 'back', function (event) {
+  setpointWindow.on('click', 'back', function (event) {
     WindowMgr.pop();
     success();
   });

@@ -38,7 +38,17 @@ function createSitemapMenu(sitemaps) {
     });
   }
   var menu = new UI.Menu({
+    status: {
+      color: Config.statusTextColor,
+      backgroundColor: Config.statusBackgroundColor
+    },
+    textColor: Config.menuTextColor,
+    backgroundColor: Config.menuBackgroundColor,
+    highlightTextColor: Config.menuHighlightTextColor,
+    highlightBackgroundColor: Config.menuHighlightBackgroundColor,
     sections: [{
+      textColor: Config.menuSectionTextColor,
+      backgroundColor: Config.menuSectionBackgroundColor,
       title: 'Sitemaps',
       items: items
     }]
