@@ -1,12 +1,12 @@
-# Contributing to openHAB for Pebble
+# Contributing to the openHAB Pebble application
 
-Want to hack on openHAB for Pebble? Awesome! Here are instructions to get you
+Want to hack on the openHAB Pebble application? Awesome! Here are instructions to get you
 started. They are probably not perfect, please let us know if anything
 feels wrong or incomplete.
 
 ## Reporting Issues
 
-Please report [openHAB for Pebble specific issues here](https://github.com/openhab/openhab.pebble/issues),
+Please report [openHAB Pebble application specific issues here](https://github.com/openhab/openhab.pebble/issues),
 while issues that are related to openHAB itself should be reported to 
 [openHAB issues](https://github.com/openhab/openhab2/issues) 
 or the [Eclipse SmartHome Core](https://bugs.eclipse.org/bugs/buglist.cgi?product=SmartHome&component=Core).
@@ -98,7 +98,7 @@ in your changes being overwritten.
 
 ### Merge approval
 
-openHAB for Pebble maintainers use LGTM (Looks Good To Me) in comments on the
+The openHAB Pebble application maintainers use LGTM (Looks Good To Me) in comments on the
 code review to indicate acceptance.
 
 A change requires LGTMs from an absolute majority of the maintainers of each
@@ -159,7 +159,7 @@ then you just add a line to every git commit message:
 using your real name (sorry, no pseudonyms or anonymous contributions.)
 
 One way to automate this, is customise your get ``commit.template`` by adding
-a ``prepare-commit-msg`` hook to your openHAB for Pebble checkout:
+a ``prepare-commit-msg`` hook to your openHAB Pebble application checkout:
 
 ```
 curl -L -o .git/hooks/prepare-commit-msg https://raw.github.com/openhab/openhab2/master/contrib/prepare-commit-msg.hook && chmod +x .git/hooks/prepare-commit-msg

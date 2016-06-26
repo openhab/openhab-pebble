@@ -1,6 +1,6 @@
-OpenHAB for Pebble
-Copyright 2015 Richard Lee
+openHAB Pebble application
+Copyright 2015 Richard Lee and others (See AUTHORS for full list)
 
-Integration between Pebble SmartWatch and OpenHAB home automation.
+Integration between Pebble SmartWatch and openHAB home automation.
 
 This product was inspired by PebbleHAB written by Alex Bartis (www.alexbartis.com).
