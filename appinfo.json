@@ -4,7 +4,7 @@
         "configurable"
     ],
     "companyName": "pebble@openhab.org",
-    "longName": "openHAB for Pebble",
+    "longName": "openHAB",
     "projectType": "pebblejs",
     "resources": {
         "media": [
