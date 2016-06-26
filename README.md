@@ -1,2 +1,2 @@
-# OpenHAB for Pebble
-Configuration page for Pebble OpenHAB client
+# openHAB
+Configuration page for Pebble openHAB client
