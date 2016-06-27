@@ -56,7 +56,7 @@ function createItem(widget) {
         // fall back on the item state
         item.subtitle = widget.item.state;
       }
-      break;      
+      break;
     case 'Switch':
     case 'Selection':
       // if they provided a split label, use it.  Otherwise...
@@ -87,7 +87,7 @@ function createItem(widget) {
     case 'Frame':
       // Weird... shouldn't this be a linked page?  not supported.
       item = undefined;
-      break; 
+      break;
     case 'List':
       // not sure what this one does
       item = undefined;
@@ -108,7 +108,7 @@ function createItem(widget) {
 
 function toggleSwitch(item, success) {
   var command;
-  if (item.state == 'OFF' || item.state == 'Uninitialized') {
+  if (item.state == 'OFF' || item.state == 'Uninitialized' || item.state == 'Undefined') {
     command = 'ON';
   } else if (item.state == 'ON') {
     command = 'OFF';
@@ -120,7 +120,7 @@ function toggleSwitch(item, success) {
 
 function createPageMenu(data, resetSitemap) {
   var sections = [];
-  var widgets = Util.arrayize(data.widget ? data.widget : data.widgets); 
+  var widgets = Util.arrayize(data.widget ? data.widget : data.widgets);
   for (var idx in widgets) {
     var widget = widgets[idx];
     switch (widget.type) {
@@ -179,7 +179,7 @@ function createPageMenu(data, resetSitemap) {
         var newItem = createItem(widget);
         if (newItem) {
           menu.item(e.sectionIndex, e.itemIndex, newItem);
-        }        
+        }
       };
       switch (widget.type) {
         case 'Switch':
@@ -238,13 +238,13 @@ exports.load = function (url, resetSitemap) {
         Authorization: Config.auth
       }
     },
-    
+
     function (data) {
       Util.log('Successfully fetched page: ' + JSON.stringify(data));
       var menu = createPageMenu(data, resetSitemap);
       WindowMgr.push(menu);
     },
-    
+
     function (error) {
       Util.log('Failed to fetch page: ' + error);
       Util.error('Comm Error', "Can't fetch page");
