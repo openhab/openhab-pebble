@@ -64,9 +64,9 @@ function createItem(widget) {
         var state = widget.item.state;
         // fall back on the item state, but...
         item.subtitle = state;
-        if ('mapping' in widget) {
+        if ('mapping' in widget || 'mappings' in widget) {
           // if there's a mapping, look up the item value label in it
-          var mappings = Util.arrayize(widget.mapping);
+          var mappings = (widget.mappings) ? Util.arrayize(widget.mappings) : Util.arrayize(widget.mapping);
           for (var idx in mappings) {
             var mapping = mappings[idx];
             if (mapping.command == state) {
@@ -107,11 +107,15 @@ function createItem(widget) {
 }
 
 function toggleSwitch(item, success) {
+  Util.log('Toggling switch: ' + item.name);
   var command;
-  if (item.state == 'OFF' || item.state == 'Uninitialized' || item.state == 'Undefined') {
+  if (item.state == 'OFF' || item.state == 'Uninitialized' || item.state == 'Undefined' || item.state == 'UNDEF') {
     command = 'ON';
   } else if (item.state == 'ON') {
     command = 'OFF';
+  } else if (item.type == 'Color' && item.state && item.state.split(',').length == 3) {
+    // handle openHAB 2 hue lights color channels defined as switches in the sitemap
+    command = (parseInt(item.state.split(',')[2]) > 0) ? 'OFF' : 'ON';
   }
   if (command) {
     Item.sendCommand(item, command, success);
@@ -183,7 +187,7 @@ function createPageMenu(data, resetSitemap) {
       };
       switch (widget.type) {
         case 'Switch':
-          if (widget.item.type == 'SwitchItem' || widget.item.type == 'GroupItem') {
+          if (widget.item.type.startsWith('Switch') || widget.item.type.startsWith('Group') || widget.item.type.startsWith('Color')) {
             toggleSwitch(widget.item, regenerateItem);
           } else if ('mapping' in widget || 'mappings' in widget) {
             var mappings = Util.arrayize(widget.mapping ? widget.mapping : widget.mappings );
@@ -203,9 +207,9 @@ function createPageMenu(data, resetSitemap) {
           break;
         case 'Slider':
         case 'Setpoint':
-          if (widget.item.type == 'DimmerItem' || (widget.item.type == 'GroupItem' && !isNumeric(widget.item.state))) {
+          if (widget.item.type.startsWith('Dimmer') || (widget.item.type.startsWith('Group') && !isNumeric(widget.item.state)) || widget.item.type.startsWith('Color')) {
             Setpoint.dimmer(e.item.title, widget.item, regenerateItem);
-          } else if (widget.item.type == 'NumberItem' || (widget.item.type == 'GroupItem' && isNumeric(widget.item.state))) {
+          } else if (widget.item.type.startsWith('Number') || (widget.item.type.startsWith('Group') && isNumeric(widget.item.state))) {
             Setpoint.number(e.item.title, widget.item, widget.min, widget.max, widget.step, regenerateItem);
           } else {
             Util.log('Unsupported setpoint/slider type: ' + widget.item.type);

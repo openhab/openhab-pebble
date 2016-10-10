@@ -139,6 +139,10 @@ exports.number = function (numberName, numberItem, min, max, step, success) {
 };
 
 exports.dimmer = function (dimmerName, dimmerItem, success) {
+  // handle openHAB2's hue color channels as dimmers
+  if (dimmerItem.type == 'Color' && dimmerItem.state && dimmerItem.state.toString().split(',').length == 3) {
+      dimmerItem.state = dimmerItem.state.toString().split(',')[2];
+  }
   var window = createWindow(dimmerName, dimmerItem, 0, 100, 1, true, success);
   WindowMgr.push(window);
 };
