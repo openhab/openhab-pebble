@@ -187,7 +187,7 @@ function createPageMenu(data, resetSitemap) {
       };
       switch (widget.type) {
         case 'Switch':
-          if (widget.item.type.startsWith('Switch') || widget.item.type.startsWith('Group') || widget.item.type.startsWith('Color')) {
+          if (widget.item.type.indexOf('Switch') === 0 || widget.item.type.indexOf('Group') === 0 || widget.item.type.indexOf('Color') === 0) {
             toggleSwitch(widget.item, regenerateItem);
           } else if ('mapping' in widget || 'mappings' in widget) {
             var mappings = Util.arrayize(widget.mapping ? widget.mapping : widget.mappings );
@@ -207,9 +207,9 @@ function createPageMenu(data, resetSitemap) {
           break;
         case 'Slider':
         case 'Setpoint':
-          if (widget.item.type.startsWith('Dimmer') || (widget.item.type.startsWith('Group') && !isNumeric(widget.item.state)) || widget.item.type.startsWith('Color')) {
+          if (widget.item.type.indexOf('Dimmer') === 0 || (widget.item.type.indexOf('Group') === 0 && !isNumeric(widget.item.state)) || widget.item.type.indexOf('Color') === 0) {
             Setpoint.dimmer(e.item.title, widget.item, regenerateItem);
-          } else if (widget.item.type.startsWith('Number') || (widget.item.type.startsWith('Group') && isNumeric(widget.item.state))) {
+          } else if (widget.item.type.indexOf('Number') === 0 || (widget.item.type.indexOf('Group') === 0 && isNumeric(widget.item.state))) {
             Setpoint.number(e.item.title, widget.item, widget.min, widget.max, widget.step, regenerateItem);
           } else {
             Util.log('Unsupported setpoint/slider type: ' + widget.item.type);
