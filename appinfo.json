@@ -10,7 +10,6 @@
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "bitmap"
             },
@@ -30,8 +29,9 @@
                 "type": "font"
             },
             {
-                "file": "images/menu_icon.png",
-                "name": "IMAGES_MENU_ICON_PNG",
+                "file": "images/logo25.png",
+                "menuIcon": true,
+                "name": "IMAGES_LOGO25_PNG",
                 "type": "bitmap"
             },
             {
@@ -45,13 +45,13 @@
                 "type": "bitmap"
             },
             {
-                "file": "images/action-icon-onoff.png",
-                "name": "IMAGES_ACTION_ICON_ONOFF_PNG",
+                "file": "images/action_icon_down.png",
+                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
                 "type": "bitmap"
             },
             {
-                "file": "images/action_icon_down.png",
-                "name": "IMAGES_ACTION_ICON_DOWN_PNG",
+                "file": "images/action-icon-onoff.png",
+                "name": "IMAGES_ACTION_ICON_ONOFF_PNG",
                 "type": "bitmap"
             }
         ]

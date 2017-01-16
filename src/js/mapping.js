@@ -47,7 +47,7 @@ function createMappingMenu(itemName, item, mappings, success) {
     }]
   });
   menu.on('select', function(e) {
-    Util.log('item selected: ' + e.item.title + ", index: " + e.itemIndex);
+    Util.log('item selected: ' + JSON.stringify(e.item) + ", index: " + e.itemIndex);
     var mapping = mappings[e.itemIndex];
     Item.sendCommand(item, mapping.command, function () {
       WindowMgr.pop();
