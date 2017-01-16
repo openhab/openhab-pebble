@@ -1,6 +1,12 @@
 # openHAB
 An openHAB client for Pebble, written using the Pebble.js framework.
 
+## Maintainer
+This repo needs a **new maintainer**.  With Pebble shutting down operations after its
+sale to Fitbit, the current maintainer has moved on to other wearable technology for
+home automation.  If you are interested in taking over maintenance of this repo, please
+send email to pebble@openhab.org
+
 ## Configuration
 After installing the application on your Pebble via the Pebble app on your phone,
 go to the Configuration screen for the app on your phone to enter the necessary
