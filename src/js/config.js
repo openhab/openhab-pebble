@@ -18,7 +18,7 @@ var Settings = require('settings');
 var Util = require('util');
 var Base64 = require('base64');
 var Feature = require('platform/feature');
-var configURL = 'http://openhab.github.io/openhab.pebble/';
+var configURL = 'http://openhab.github.io/openhab-pebble/';
 /* global module */
 var exports = module.exports = {};
 
