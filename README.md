@@ -27,6 +27,14 @@ to access your server from the Internet, this field can be left blank.
 If you have secured your server using authentication, enter your username here.
 Otherwise, this field can be left blank.
 
+**IMPORTANT: If you are using openHAB 3 and the app won't connect with a "Comm error:
+can't fetch sitemaps" errors, you likely have to specify an API token here, even if
+the sitemaps are accessible anonymously, because the Pebble app sends an invalid empty
+Basic authorization header even if you leave this field blank.)**
+
+**See https://www.openhab.org/docs/configuration/restdocs.html#with-an-api-token, create
+an API token for the Pebble app and copy it in the Username field.**
+
 ### Password
 The password for servers using authentication, otherwise blank.
 
